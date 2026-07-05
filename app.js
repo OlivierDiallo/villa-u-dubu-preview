@@ -89,16 +89,20 @@
   /* map a global progress p (0..1) into a phase progress for [a,b] */
   function phase(p, a, b) { return Math.max(0, Math.min(1, (p - a) / (b - a))); }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  /* slight overshoot then settle — reads as the slab being "craned" into place */
+  function easeBack(t) { var c1 = 1.2, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }
 
   var PHASES = [ /* per data-stage: [start, end] of its entrance */
-    [0.02, 0.20],  /* platform */
-    [0.22, 0.44],  /* v1 */
-    [0.46, 0.68],  /* v2 + pool */
-    [0.70, 0.88]   /* v3 */
+    [0.00, 0.16],  /* platform */
+    [0.20, 0.40],  /* v1 + children's apartments */
+    [0.44, 0.64],  /* v2 */
+    [0.68, 0.84]   /* v3 */
   ];
   var ENTER = [ /* entrance vector per stage: [dx%, dy%] */
     [0, 60], [-120, 0], [120, 0], [0, -140]
   ];
+  var GLASS_LAG = 0.05;  /* windows materialize just after the slab lands */
+  var POOL = [0.64, 0.72]; /* pool fills after the piano nobile settles */
 
   function updateConceptCaption() {
     if (!caption || !window.I18N) return;
@@ -110,24 +114,31 @@
   function renderConcept(p) {
     var stageNow = 0;
     for (var s = 0; s < 4; s++) {
-      var t = easeOut(phase(p, PHASES[s][0], PHASES[s][1]));
-      if (t > 0.5) stageNow = s;
+      var raw = phase(p, PHASES[s][0], PHASES[s][1]);
+      var t = easeBack(raw);
+      if (raw > 0.5) stageNow = s;
+      var glassT = easeOut(phase(p, PHASES[s][1], PHASES[s][1] + GLASS_LAG));
       stageEls.forEach(function (el) {
         if (+el.getAttribute('data-stage') !== s) return;
-        var isLbl = el.classList.contains('bs-lbl');
-        if (isLbl) {
-          el.style.opacity = t >= 1 ? '1' : '0';
+        if (el.classList.contains('bs-lbl')) {
+          el.style.opacity = raw >= 1 ? '1' : '0';
           el.style.transition = 'opacity .5s ease';
+        } else if (el.classList.contains('bs-pool')) {
+          var pt = easeOut(phase(p, POOL[0], POOL[1]));
+          el.style.opacity = String(pt);
+          el.style.transform = 'scaleX(' + pt.toFixed(3) + ')';
         } else {
           var vec = ENTER[s];
           var ov = el.getAttribute('data-enter');
           if (ov) { ov = ov.split(','); vec = [parseFloat(ov[0]), parseFloat(ov[1])]; }
-          el.style.opacity = String(Math.min(1, t * 1.4));
-          el.style.transform = 'translate(' + (vec[0] * (1 - t)) + '%,' + (vec[1] * (1 - t)) + '%)';
+          el.style.opacity = String(Math.min(1, raw * 1.6));
+          el.style.transform = 'translate(' + (vec[0] * (1 - t)).toFixed(2) + '%,' + (vec[1] * (1 - t)).toFixed(2) + '%)';
+          var g = el.querySelector('.glass');
+          if (g) g.style.opacity = String(glassT);
         }
       });
     }
-    var lit = p > 0.90;
+    var lit = p > 0.88;
     scene.classList.toggle('lit', lit);
     if (lit) stageNow = 3;
     if (stageNow !== lastStage) {
