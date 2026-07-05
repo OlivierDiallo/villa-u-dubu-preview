@@ -119,8 +119,11 @@
           el.style.opacity = t >= 1 ? '1' : '0';
           el.style.transition = 'opacity .5s ease';
         } else {
+          var vec = ENTER[s];
+          var ov = el.getAttribute('data-enter');
+          if (ov) { ov = ov.split(','); vec = [parseFloat(ov[0]), parseFloat(ov[1])]; }
           el.style.opacity = String(Math.min(1, t * 1.4));
-          el.style.transform = 'translate(' + (ENTER[s][0] * (1 - t)) + '%,' + (ENTER[s][1] * (1 - t)) + '%)';
+          el.style.transform = 'translate(' + (vec[0] * (1 - t)) + '%,' + (vec[1] * (1 - t)) + '%)';
         }
       });
     }
