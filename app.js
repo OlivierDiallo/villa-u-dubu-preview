@@ -1,11 +1,10 @@
-/* Villa U Dubu — site engine: i18n (CZ/FR/EN), themes, scroll choreography */
+/* Villa U Dubu — site engine: i18n (CZ/FR/EN) + scroll choreography */
 (function () {
   'use strict';
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- i18n ---------- */
   var LANGS = ['cs', 'fr', 'en'];
-  var current = 'fr';
 
   function detectLang() {
     var p = new URLSearchParams(location.search).get('lang');
@@ -25,7 +24,6 @@
 
   function setLang(lang) {
     if (!window.I18N || !window.I18N[lang]) return;
-    current = lang;
     var dict = window.I18N[lang];
     document.documentElement.lang = lang;
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
@@ -44,23 +42,10 @@
       b.classList.toggle('active', b.getAttribute('data-lang') === lang);
     });
     try { localStorage.setItem('villa-lang', lang); } catch (e) {}
-    updateConceptCaption();
   }
 
   document.querySelectorAll('.lang-switch button').forEach(function (b) {
     b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
-  });
-
-  /* ---------- theme ---------- */
-  var themeButtons = document.querySelectorAll('.theme-switch button');
-  function setTheme(name) {
-    document.body.setAttribute('data-theme', name);
-    themeButtons.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-set') === name); });
-    try { localStorage.setItem('altam-villa-theme', name); } catch (e) {}
-    applyHeader();
-  }
-  themeButtons.forEach(function (b) {
-    b.addEventListener('click', function () { setTheme(b.getAttribute('data-set')); });
   });
 
   /* ---------- header + hero parallax ---------- */
@@ -75,83 +60,10 @@
     header.style.background = scrolled ? primary : 'transparent';
     header.style.paddingTop = scrolled ? '14px' : '22px';
     header.style.paddingBottom = scrolled ? '14px' : '22px';
-    header.style.boxShadow = scrolled ? '0 1px 0 rgba(255,255,255,.08)' : 'none';
+    header.style.boxShadow = scrolled ? '0 1px 0 rgba(193,207,225,.15)' : 'none';
   }
 
-  /* ---------- concept build scene ---------- */
-  var conceptSection = document.querySelector('.concept-scroll');
-  var scene = document.querySelector('.build-scene');
-  var caption = document.getElementById('concept-caption');
-  var dots = document.querySelectorAll('.concept-progress i');
-  var stageEls = scene ? Array.prototype.slice.call(scene.querySelectorAll('[data-stage]')) : [];
-  var lastStage = -1;
-
-  /* map a global progress p (0..1) into a phase progress for [a,b] */
-  function phase(p, a, b) { return Math.max(0, Math.min(1, (p - a) / (b - a))); }
-  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-  /* slight overshoot then settle — reads as the slab being "craned" into place */
-  function easeBack(t) { var c1 = 1.2, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }
-
-  var PHASES = [ /* per data-stage: [start, end] of its entrance */
-    [0.00, 0.16],  /* platform */
-    [0.20, 0.40],  /* v1 + children's apartments */
-    [0.44, 0.64],  /* v2 */
-    [0.68, 0.84]   /* v3 */
-  ];
-  var ENTER = [ /* entrance vector per stage: [dx%, dy%] */
-    [0, 60], [-120, 0], [120, 0], [0, -140]
-  ];
-  var GLASS_LAG = 0.05;  /* windows materialize just after the slab lands */
-  var POOL = [0.64, 0.72]; /* pool fills after the piano nobile settles */
-
-  function updateConceptCaption() {
-    if (!caption || !window.I18N) return;
-    var stage = Math.max(0, lastStage);
-    var dict = window.I18N[current] || {};
-    caption.textContent = dict['concept.s' + stage] || '';
-  }
-
-  function renderConcept(p) {
-    var stageNow = 0;
-    for (var s = 0; s < 4; s++) {
-      var raw = phase(p, PHASES[s][0], PHASES[s][1]);
-      var t = easeBack(raw);
-      if (raw > 0.5) stageNow = s;
-      var glassT = easeOut(phase(p, PHASES[s][1], PHASES[s][1] + GLASS_LAG));
-      stageEls.forEach(function (el) {
-        if (+el.getAttribute('data-stage') !== s) return;
-        if (el.classList.contains('bs-lbl')) {
-          el.style.opacity = raw >= 1 ? '1' : '0';
-          el.style.transition = 'opacity .5s ease';
-        } else if (el.classList.contains('bs-pool')) {
-          var pt = easeOut(phase(p, POOL[0], POOL[1]));
-          el.style.opacity = String(pt);
-          el.style.transform = 'scaleX(' + pt.toFixed(3) + ')';
-        } else {
-          var vec = ENTER[s];
-          var ov = el.getAttribute('data-enter');
-          if (ov) { ov = ov.split(','); vec = [parseFloat(ov[0]), parseFloat(ov[1])]; }
-          el.style.opacity = String(Math.min(1, raw * 1.6));
-          el.style.transform = 'translate(' + (vec[0] * (1 - t)).toFixed(2) + '%,' + (vec[1] * (1 - t)).toFixed(2) + '%)';
-          var g = el.querySelector('.glass');
-          if (g) g.style.opacity = String(glassT);
-        }
-      });
-    }
-    var lit = p > 0.88;
-    scene.classList.toggle('lit', lit);
-    if (lit) stageNow = 3;
-    if (stageNow !== lastStage) {
-      lastStage = stageNow;
-      caption.style.opacity = '0';
-      setTimeout(function () { updateConceptCaption(); caption.style.opacity = '1'; }, 180);
-      dots.forEach(function (d, i) { d.classList.toggle('on', i <= stageNow); });
-    }
-  }
-
-  /* ---------- unified scroll handler ---------- */
   function onScroll() {
-    /* header state + hero parallax */
     var progress = heroSection ? -heroSection.getBoundingClientRect().top : 200;
     var s = progress > 80;
     if (s !== scrolled) { scrolled = s; applyHeader(); }
@@ -159,13 +71,6 @@
     if (heroImg && !reduceMotion && progress > -vh && progress < vh * 1.25) {
       var z = 1 + Math.max(0, Math.min(progress / vh, 1)) * 0.08;
       heroImg.style.transform = 'translateY(' + (-progress * 0.12) + 'px) scale(' + z.toFixed(4) + ')';
-    }
-    /* concept scene */
-    if (conceptSection && scene && !reduceMotion) {
-      var r = conceptSection.getBoundingClientRect();
-      var total = r.height - vh;
-      var p = total > 0 ? Math.max(0, Math.min(1, -r.top / total)) : 1;
-      renderConcept(p);
     }
   }
   var ticking = false;
@@ -178,13 +83,6 @@
     setTimeout(run, 120);                 /* fallback when rAF is throttled (hidden tab) */
   }
   window.addEventListener('scroll', scheduleScroll, { passive: true });
-
-  if (reduceMotion && scene) { /* static final state */
-    stageEls.forEach(function (el) { el.style.opacity = '1'; el.style.transform = 'none'; });
-    scene.classList.add('lit');
-    lastStage = 3;
-    dots.forEach(function (d) { d.classList.add('on'); });
-  }
 
   /* ---------- reveals ---------- */
   var revealEls = document.querySelectorAll('.reveal, .reveal-img');
@@ -202,7 +100,7 @@
   /* ---------- count-up facts ---------- */
   function fmt(n) {
     var s = String(Math.round(n));
-    return s.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); /* thin space, works for cs/fr; en close enough */
+    return s.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
   var counters = document.querySelectorAll('[data-count]');
   function runCounter(el) {
@@ -256,10 +154,7 @@
   }
 
   /* ---------- boot ---------- */
-  var themeParam = new URLSearchParams(location.search).get('theme');
-  var savedTheme = null;
-  try { savedTheme = localStorage.getItem('altam-villa-theme'); } catch (e) {}
-  setTheme(themeParam === 'nuit' || themeParam === 'pierre' ? themeParam : (savedTheme || document.body.getAttribute('data-theme') || 'nuit'));
   setLang(detectLang());
+  applyHeader();
   onScroll();
 })();

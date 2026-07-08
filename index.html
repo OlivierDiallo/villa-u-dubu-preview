@@ -3,26 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-i18n="meta.title">Villa U Dubu — Prague 4 · Braník | ALTAM</title>
-<meta name="description" data-i18n-content="meta.desc" content="Villa U Dubu — villa d'architecte neuve à Braník. Trois volumes blancs face au Château de Prague. Fandament Architects. En exclusivité chez ALTAM.">
+<title data-i18n="meta.title">Villa U Dubu — Prague 4 · Braník | ALTAM Real Estate</title>
+<meta name="description" data-i18n-content="meta.desc" content="Villa U Dubu — villa d'architecte neuve à Braník. Trois volumes blancs face au Château de Prague. Fandament Architects. En exclusivité chez ALTAM Real Estate.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Tenor+Sans&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Raleway:wght@400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<noscript><style>.reveal,.reveal-img{opacity:1;transform:none;clip-path:none}.concept-scroll{height:auto}.concept-sticky{position:static;height:auto;padding:80px 24px}.bs-vol,.bs-platform,.bs-lbl,.bs-pool{opacity:1!important;transform:none!important}[data-count]{visibility:visible}</style></noscript>
+<noscript><style>.reveal,.reveal-img{opacity:1;transform:none;clip-path:none}[data-count]{visibility:visible}</style></noscript>
 <script src="i18n.js" defer></script>
 <script src="app.js" defer></script>
 </head>
-<body data-theme="nuit" id="top">
+<body id="top">
 
   <!-- ============ HEADER ============ -->
   <header class="site-header">
-    <div class="brand"><b>VILLA U DUBU</b><small data-i18n="brand.sub">en exclusivité par ALTAM</small></div>
+    <div class="brand"><b>VILLA U DUBU</b><small data-i18n="brand.sub">par ALTAM Real Estate</small></div>
     <nav class="main-nav">
+      <a href="#prestations" data-i18n="nav.prestations">Prestations</a>
       <a href="#bien" data-i18n="nav.bien">Le bien</a>
-      <a href="#concept" data-i18n="nav.concept">Concept</a>
+      <a href="#niveaux" data-i18n="nav.niveaux">Niveaux</a>
       <a href="#galerie" data-i18n="nav.galerie">Galerie</a>
-      <a href="#quartier" data-i18n="nav.quartier">Quartier</a>
+      <a href="#details" data-i18n="nav.details">Plans &amp; détails</a>
     </nav>
     <div class="header-right">
       <div class="lang-switch" role="group" aria-label="Language">
@@ -34,9 +35,9 @@
     </div>
   </header>
 
-  <!-- ============ HERO ============ -->
+  <!-- ============ LANDING / HERO ============ -->
   <section class="hero">
-    <img class="hero-img" src="images/pool-night.jpg" alt="Villa U Dubu">
+    <img class="hero-img" src="images/hero.jpg" alt="Villa U Dubu — terrasse et bassin à débordement, vue sur Prague">
     <div class="hero-scrim"></div>
     <div class="hero-content">
       <div class="status-badge"><span class="dot"></span><span data-i18n="hero.badge">À vendre</span></div>
@@ -75,97 +76,8 @@
     </div>
   </section>
 
-  <!-- ============ LE BIEN ============ -->
-  <section id="bien" class="section light">
-    <div class="inner two-col reveal">
-      <div>
-        <p class="eyebrow" data-i18n="bien.eyebrow">Le bien</p>
-        <h2 class="title" data-i18n="bien.title">Une villa urbaine assurée, au-dessus de Prague</h2>
-      </div>
-      <div style="padding-top:6px;">
-        <p class="lede" data-i18n="bien.p1"></p>
-        <p class="lede" data-i18n="bien.p2"></p>
-        <p class="lede" style="margin-bottom:0;" data-i18n="bien.p3"></p>
-      </div>
-    </div>
-    <div class="quote reveal">
-      <p data-i18n="bien.quote">« Une construction élégante et légère, à sa place dans un quartier prestigieux de la métropole tchèque. »</p>
-      <div class="rule"></div>
-    </div>
-  </section>
-
-  <!-- ============ CONCEPT — LA VILLA SE CONSTRUIT ============ -->
-  <section id="concept" class="concept-scroll">
-    <div class="concept-sticky">
-      <div class="concept-head">
-        <p class="eyebrow" data-i18n="concept.eyebrow">Concept</p>
-        <h2 class="title" data-i18n="concept.title">Une maison qui se construit sous vos yeux</h2>
-        <p class="concept-intro" data-i18n="concept.intro">Continuez à faire défiler — la villa s'assemble telle que l'architecte l'a pensée : strate par strate.</p>
-      </div>
-      <div class="build-scene" aria-hidden="true">
-        <div class="bs-terrain"></div>
-        <div class="bs-platform" data-stage="0"></div>
-        <div class="bs-vol bs-v1" data-stage="1"><div class="glass"></div></div>
-        <div class="bs-vol bs-v4" data-stage="1" data-enter="-90,-50"><div class="glass"></div></div>
-        <div class="bs-vol bs-v2" data-stage="2"><div class="glass"></div></div>
-        <div class="bs-pool" data-stage="2"></div>
-        <div class="bs-vol bs-v3" data-stage="3"><div class="glass"></div></div>
-        <span class="bs-lbl bs-lbl-base" data-stage="0" data-i18n="concept.base">Plateforme</span>
-        <span class="bs-lbl bs-lbl-1" data-stage="1" data-i18n="concept.v1">Niveau d'entrée</span>
-        <span class="bs-lbl bs-lbl-4" data-stage="1" data-i18n="concept.v4">Appartements des enfants</span>
-        <span class="bs-lbl bs-lbl-2" data-stage="2" data-i18n="concept.v2">Piano nobile</span>
-        <span class="bs-lbl bs-lbl-3" data-stage="3" data-i18n="concept.v3">Wellness</span>
-      </div>
-      <p class="concept-caption" id="concept-caption"></p>
-      <div class="concept-progress" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    </div>
-  </section>
-
-  <!-- ============ FLOORS ============ -->
-  <section id="niveaux" class="section alt">
-    <div class="inner-wide">
-      <div class="floors-head reveal">
-        <p class="eyebrow" data-i18n="floors.eyebrow">Niveaux</p>
-        <h2 class="title" data-i18n="floors.title">La maison, niveau par niveau</h2>
-      </div>
-      <figure class="axo reveal-img">
-        <img src="images/aerial.jpg" alt="Axonométrie de l'étude — Villa U Dubu">
-        <figcaption data-i18n="axo.cap">Axonométrie de l'étude — Fandament Architects</figcaption>
-      </figure>
-      <div class="floors-grid">
-        <div class="floor-card reveal"><div class="lvl">−1</div><h3 data-i18n="floors.f0.n">Sous-sol</h3><p data-i18n="floors.f0.d"></p></div>
-        <div class="floor-card reveal"><div class="lvl">±0</div><h3 data-i18n="floors.f1.n">Niveau d'entrée</h3><p data-i18n="floors.f1.d"></p></div>
-        <div class="floor-card reveal"><div class="lvl">+1</div><h3 data-i18n="floors.f2.n">Piano nobile</h3><p data-i18n="floors.f2.d"></p></div>
-        <div class="floor-card reveal"><div class="lvl">+2</div><h3 data-i18n="floors.f3.n">Étage wellness</h3><p data-i18n="floors.f3.d"></p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ GALLERY ============ -->
-  <section id="galerie" class="section light">
-    <div class="inner-wide">
-      <div class="gal-head reveal">
-        <div>
-          <p class="eyebrow" data-i18n="gal.eyebrow">Galerie</p>
-          <h2 class="title" data-i18n="gal.title">Visite en images</h2>
-        </div>
-        <p class="cap" data-i18n="gal.cap"></p>
-      </div>
-      <div class="gal-grid">
-        <img class="g-4x2 reveal-img" src="images/pool-day.jpg" alt="Piscine et terrasse, vue sur la ville">
-        <img class="g-2x1 reveal-img" src="images/living.jpg" alt="Séjour ouvert">
-        <img class="g-2x1 reveal-img" src="images/terrace-dusk.jpg" alt="Terrasse au crépuscule">
-        <img class="g-2x2 reveal-img" src="images/spa-night.jpg" alt="Spa intérieur, vue skyline">
-        <img class="g-2x1 reveal-img" src="images/facade-day.jpg" alt="Façade de jour">
-        <img class="g-2x1 reveal-img" src="images/entrance.jpg" alt="Hall et escalier">
-        <img class="g-2x1 reveal-img" src="images/model-2.jpg" alt="Maquette — vue d'ensemble">
-        <img class="g-2x1 reveal-img" src="images/model-1.jpg" alt="Maquette — porte-à-faux">
-      </div>
-    </div>
-  </section>
-
   <!-- ============ PRESTATIONS ============ -->
-  <section id="prestations" class="section alt">
+  <section id="prestations" class="section light">
     <div class="inner reveal">
       <div class="prest-head">
         <p class="eyebrow" data-i18n="prest.eyebrow">Prestations</p>
@@ -216,11 +128,73 @@
     </div>
   </section>
 
-  <!-- ============ SPECS ============ -->
+  <!-- ============ LE BIEN ============ -->
+  <section id="bien" class="section alt">
+    <div class="inner two-col reveal">
+      <div>
+        <p class="eyebrow" data-i18n="bien.eyebrow">Le bien</p>
+        <h2 class="title" data-i18n="bien.title">Une villa urbaine assurée, au-dessus de Prague</h2>
+      </div>
+      <div style="padding-top:6px;">
+        <p class="lede" data-i18n="bien.p1"></p>
+        <p class="lede" data-i18n="bien.p2"></p>
+        <p class="lede" style="margin-bottom:0;" data-i18n="bien.p3"></p>
+      </div>
+    </div>
+    <div class="quote reveal">
+      <p data-i18n="bien.quote">« Une construction élégante et légère, à sa place dans un quartier prestigieux de la métropole tchèque. »</p>
+      <div class="rule"></div>
+    </div>
+  </section>
+
+  <!-- ============ NIVEAUX ============ -->
+  <section id="niveaux" class="section light">
+    <div class="inner-wide">
+      <div class="floors-head reveal">
+        <p class="eyebrow" data-i18n="floors.eyebrow">Niveaux</p>
+        <h2 class="title" data-i18n="floors.title">La maison, niveau par niveau</h2>
+      </div>
+      <figure class="axo reveal-img">
+        <img src="images/aerial.jpg" alt="Axonométrie de l'étude — Villa U Dubu">
+        <figcaption data-i18n="axo.cap">Axonométrie de l'étude — Fandament Architects</figcaption>
+      </figure>
+      <div class="floors-grid">
+        <div class="floor-card reveal"><div class="lvl">−1</div><h3 data-i18n="floors.f0.n">Sous-sol</h3><p data-i18n="floors.f0.d"></p></div>
+        <div class="floor-card reveal"><div class="lvl">±0</div><h3 data-i18n="floors.f1.n">Niveau d'entrée</h3><p data-i18n="floors.f1.d"></p></div>
+        <div class="floor-card reveal"><div class="lvl">+1</div><h3 data-i18n="floors.f2.n">Piano nobile</h3><p data-i18n="floors.f2.d"></p></div>
+        <div class="floor-card reveal"><div class="lvl">+2</div><h3 data-i18n="floors.f3.n">Étage wellness</h3><p data-i18n="floors.f3.d"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALERIE ============ -->
+  <section id="galerie" class="section alt">
+    <div class="inner-wide">
+      <div class="gal-head reveal">
+        <div>
+          <p class="eyebrow" data-i18n="gal.eyebrow">Galerie</p>
+          <h2 class="title" data-i18n="gal.title">Visite en images</h2>
+        </div>
+        <p class="cap" data-i18n="gal.cap"></p>
+      </div>
+      <div class="gal-grid">
+        <img class="g-4x2 reveal-img" src="images/pool-day.jpg" alt="Piscine et terrasse, vue sur la ville">
+        <img class="g-2x1 reveal-img" src="images/living.jpg" alt="Séjour ouvert">
+        <img class="g-2x1 reveal-img" src="images/terrace-dusk.jpg" alt="Terrasse au crépuscule">
+        <img class="g-2x2 reveal-img" src="images/spa-night.jpg" alt="Spa intérieur, vue skyline">
+        <img class="g-2x1 reveal-img" src="images/facade-day.jpg" alt="Façade de jour">
+        <img class="g-2x1 reveal-img" src="images/entrance.jpg" alt="Hall et escalier">
+        <img class="g-2x1 reveal-img" src="images/model-2.jpg" alt="Maquette — vue d'ensemble">
+        <img class="g-2x1 reveal-img" src="images/pool-night.jpg" alt="Piscine et terrasse au crépuscule">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLANS & DÉTAILS ============ -->
   <section id="details" class="section light">
     <div class="inner specs-wrap reveal">
       <div>
-        <p class="eyebrow" data-i18n="specs.eyebrow">Plan &amp; détails</p>
+        <p class="eyebrow" data-i18n="specs.eyebrow">Plans &amp; détails</p>
         <h2 class="title" style="margin-bottom:30px;" data-i18n="specs.title">Données d'identification</h2>
         <div>
           <div class="spec-row"><span class="k" data-i18n="specs.r1.k"></span><span class="v" data-i18n="specs.r1.v"></span></div>
@@ -279,7 +253,7 @@
           <div class="avatar"><img src="images/agent.jpg" alt="Emmanuel Gluntz"></div>
           <div>
             <p class="n">Emmanuel Gluntz</p>
-            <p class="r" data-i18n="contact.agent.r">Représentée en exclusivité par ALTAM</p>
+            <p class="r" data-i18n="contact.agent.r">Représentée en exclusivité par ALTAM Real Estate</p>
           </div>
         </div>
         <div class="contact-lines">
@@ -303,10 +277,9 @@
   <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
     <div class="footer-top">
-      <a class="brand-link" href="https://altamresidential.cz" target="_blank" rel="noopener" aria-label="ALTAM Residential Prague">
-        <div class="mark">ALTAM</div>
-        <p class="tag" data-i18n="footer.tag">Conseil immobilier d'exception</p>
-        <p class="visit" data-i18n="footer.visit">Découvrir ALTAM Residential →</p>
+      <a class="brand-link" href="https://altamresidential.cz" target="_blank" rel="noopener" aria-label="ALTAM Real Estate">
+        <img class="logo" src="images/altam-logo.png" alt="ALTAM Real Estate">
+        <p class="visit" data-i18n="footer.visit">Découvrir ALTAM Real Estate →</p>
       </a>
       <div class="addr">
         <p>Na Hřebenkách 1352/80c, 150 00 Prague 5</p>
@@ -315,15 +288,8 @@
       </div>
       <a href="#top" class="back" data-i18n="footer.back">Retour en haut</a>
     </div>
-    <div class="footer-bottom" data-i18n="footer.copy">© 2026 ALTAM. Tous droits réservés.</div>
+    <div class="footer-bottom" data-i18n="footer.copy">© 2026 ALTAM Real Estate. Tous droits réservés.</div>
   </footer>
-
-  <!-- ============ THEME SWITCHER ============ -->
-  <div class="theme-switch">
-    <span class="lbl" data-i18n="theme.lbl">Thème</span>
-    <button data-set="nuit"><span class="sw"><i style="background:#1a2744;"></i><i style="background:#b8952a;"></i></span>Nuit</button>
-    <button data-set="pierre"><span class="sw"><i style="background:#3d3930;"></i><i style="background:#8a8550;"></i></span>Pierre</button>
-  </div>
 
   <!-- ============ LIGHTBOX ============ -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
