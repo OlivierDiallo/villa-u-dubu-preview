@@ -45,7 +45,7 @@ img { display: block; }
 .brand b { font-family: var(--font-label); font-size: 19px; font-weight: 600; letter-spacing: .22em; color: #fff; white-space: nowrap; }
 .brand small { font-family: var(--font-label); font-size: 11.5px; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: rgba(255,255,255,.78); margin-top: 8px; white-space: nowrap; }
 .main-nav { display: none; gap: 30px; font-family: var(--font-label); font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
-.main-nav a { color: #fff; text-decoration: none; opacity: .85; transition: opacity .25s; }
+.main-nav a { color: #fff; text-decoration: none; opacity: .85; transition: opacity .25s; white-space: nowrap; }
 .main-nav a:hover { opacity: 1; }
 .header-right { display: flex; align-items: center; gap: 16px; }
 .header-cta {
@@ -79,7 +79,13 @@ img { display: block; }
 
 /* ---------- hero ---------- */
 .hero { position: relative; height: 100vh; min-height: 680px; width: 100%; overflow: hidden; }
-.hero-img { position: absolute; top: 0; left: 0; width: 100%; height: 114%; object-fit: cover; will-change: transform; }
+/* slideshow: each photo enters slightly zoomed and pulls BACK (dézoom) to its fullest frame */
+.hero-slides { position: absolute; top: 0; left: 0; width: 100%; height: 114%; will-change: transform; }
+.hero-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 1.1s ease; }
+.hero-slide.active { opacity: 1; animation: heroZoomOut 4.6s cubic-bezier(.22,.61,.36,1) forwards; }
+@keyframes heroZoomOut { from { transform: scale(1.1); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .hero-slide.active { animation: none; } }
 .hero-scrim { position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to bottom, rgba(4,11,37,.42) 0%, rgba(4,11,37,.06) 32%, rgba(4,11,37,.14) 62%, rgba(4,11,37,.78) 100%); }
 .hero-content { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 clamp(20px,5vw,64px) clamp(40px,6vh,72px); }

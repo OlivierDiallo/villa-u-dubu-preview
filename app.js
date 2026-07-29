@@ -50,7 +50,7 @@
 
   /* ---------- header + hero parallax ---------- */
   var header = document.querySelector('.site-header');
-  var heroImg = document.querySelector('.hero-img');
+  var heroSlides = document.querySelector('.hero-slides');
   var heroSection = document.querySelector('.hero');
   var scrolled = false;
 
@@ -68,10 +68,22 @@
     var s = progress > 80;
     if (s !== scrolled) { scrolled = s; applyHeader(); }
     var vh = window.innerHeight || 800;
-    if (heroImg && !reduceMotion && progress > -vh && progress < vh * 1.25) {
-      var z = 1 + Math.max(0, Math.min(progress / vh, 1)) * 0.08;
-      heroImg.style.transform = 'translateY(' + (-progress * 0.12) + 'px) scale(' + z.toFixed(4) + ')';
+    /* parallax only — no scale, the slides carry their own zoom-out */
+    if (heroSlides && !reduceMotion && progress > -vh && progress < vh * 1.25) {
+      heroSlides.style.transform = 'translateY(' + (-progress * 0.12) + 'px)';
     }
+  }
+
+  /* ---------- hero slideshow (main renders, ~3s each, zoom-out entrance) ---------- */
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.hero-slide'));
+  if (slides.length > 1 && !reduceMotion) {
+    var slideIndex = 0;
+    var SLIDE_MS = 3200;
+    setInterval(function () {
+      if (document.hidden) return; /* don't advance while the tab is in the background */
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides.forEach(function (s, i) { s.classList.toggle('active', i === slideIndex); });
+    }, SLIDE_MS);
   }
   var ticking = false;
   function scheduleScroll() {
